@@ -14,8 +14,8 @@
             --bg-card: #120f24;
             --bg-card-inner: #1a1633;
             --purple-btn: #7c3aed;
-            --purple-btn-hover: #6d28d9;
-            --purple-glow: rgba(124, 58, 237, 0.4);
+            --purple-btn-hover: #9333ea;
+            --purple-glow: rgba(124, 58, 237, 0.45);
             --cyan-accent: #00d9ff;
             --pink-accent: #ec4899;
             --border-purple: rgba(139, 92, 246, 0.22);
@@ -51,7 +51,7 @@
             background: rgba(9, 8, 18, 0.92);
             backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-subtle);
-            padding: 10px 32px;
+            padding: 16px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -61,19 +61,22 @@
             display: flex;
             align-items: center;
             text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.8px;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
         }
 
-        .nav-brand-img {
-            height: 48px;
-            width: auto;
-            display: block;
-            border-radius: 6px;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .nav-brand-img:hover {
-            opacity: 0.95;
+        .nav-brand:hover {
             transform: scale(1.02);
+            text-shadow: 0 0 16px rgba(0, 217, 255, 0.6);
+        }
+
+        .nav-brand span {
+            color: var(--cyan-accent);
+            margin: 0 2px;
         }
 
         .nav-links {
@@ -86,19 +89,35 @@
             color: var(--text-body);
             text-decoration: none;
             font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            font-weight: 600;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--text-heading);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
         }
 
-        /* --- NEON SHOWCASE CENTER BANNER --- */
+        /* --- NEON ANIMATED SHOWCASE CENTER BANNER --- */
+        @keyframes neonGlowShift {
+            0% {
+                background-position: 0% 50%;
+                box-shadow: 0 0 30px rgba(0, 217, 255, 0.35), 0 0 60px rgba(124, 58, 237, 0.25);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 0 0 45px rgba(236, 72, 153, 0.45), 0 0 80px rgba(0, 217, 255, 0.35);
+            }
+            100% {
+                background-position: 0% 50%;
+                box-shadow: 0 0 30px rgba(0, 217, 255, 0.35), 0 0 60px rgba(124, 58, 237, 0.25);
+            }
+        }
+
         .showcase-banner-section {
             width: 100%;
             max-width: 1200px;
-            margin: 28px auto 0;
+            margin: 32px auto 0;
             padding: 0 24px;
             display: flex;
             justify-content: center;
@@ -109,14 +128,14 @@
             width: 100%;
             padding: 3px;
             border-radius: 20px;
-            background: linear-gradient(135deg, var(--cyan-accent) 0%, var(--purple-btn) 50%, var(--pink-accent) 100%);
-            box-shadow: 0 0 35px rgba(0, 217, 255, 0.25), 0 0 60px rgba(124, 58, 237, 0.3);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            background: linear-gradient(120deg, var(--cyan-accent), var(--purple-btn), var(--pink-accent), var(--cyan-accent));
+            background-size: 300% 300%;
+            animation: neonGlowShift 6s ease infinite;
+            transition: transform 0.3s ease;
         }
 
         .neon-banner-wrapper:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 45px rgba(0, 217, 255, 0.35), 0 0 75px rgba(236, 72, 153, 0.4);
         }
 
         .neon-banner-frame {
@@ -173,7 +192,7 @@
             max-width: 600px;
         }
 
-        /* --- BUTTONS --- */
+        /* --- BUTTONS & INTERACTIVE HOVER STATES --- */
         .btn-purple {
             display: inline-flex;
             align-items: center;
@@ -182,18 +201,20 @@
             color: #ffffff;
             font-weight: 600;
             font-size: 0.95rem;
-            padding: 12px 24px;
+            padding: 13px 26px;
             border-radius: 8px;
             text-decoration: none;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 18px var(--purple-glow);
-            transition: background 0.2s, transform 0.2s;
+            transition: all 0.25s ease;
         }
 
         .btn-purple:hover {
             background: var(--purple-btn-hover);
             transform: translateY(-2px);
+            box-shadow: 0 6px 26px rgba(168, 85, 247, 0.65);
+            color: #ffffff;
         }
 
         .btn-dark-outline {
@@ -204,17 +225,20 @@
             color: var(--text-heading);
             font-weight: 600;
             font-size: 0.95rem;
-            padding: 12px 24px;
+            padding: 13px 26px;
             border-radius: 8px;
             text-decoration: none;
             border: 1px solid var(--border-subtle);
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+            transition: all 0.25s ease;
         }
 
         .btn-dark-outline:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(139, 92, 246, 0.22);
+            border-color: #a78bfa;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
         }
 
         .btn-play-dark {
@@ -226,22 +250,30 @@
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 0.95rem;
-            padding: 12px 22px;
+            padding: 12px 24px;
             border-radius: 8px;
             text-decoration: none;
             border: 1px solid var(--border-purple);
-            transition: background 0.2s, border-color 0.2s;
+            transition: all 0.25s ease;
         }
 
         .btn-play-dark:hover {
-            background: #231e42;
-            border-color: rgba(139, 92, 246, 0.45);
+            background: #272147;
+            border-color: #c084fc;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 22px rgba(192, 132, 252, 0.4);
         }
 
         .btn-play-dark svg {
             width: 20px;
             height: 20px;
             fill: #ffffff;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-play-dark:hover svg {
+            transform: scale(1.1);
         }
 
         /* --- HERO SECTION --- */
@@ -286,6 +318,11 @@
             border: 1px solid var(--border-purple);
             border-radius: 24px;
             padding: 44px;
+            transition: border-color 0.3s ease;
+        }
+
+        .featured-box:hover {
+            border-color: rgba(139, 92, 246, 0.4);
         }
 
         .featured-header {
@@ -330,6 +367,13 @@
             border: 1px solid var(--border-subtle);
             border-radius: 12px;
             padding: 16px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
 
         .feature-icon-box {
@@ -400,12 +444,24 @@
             gap: 6px;
             font-size: 0.75rem;
             color: var(--text-dim);
+            transition: all 0.25s ease;
+        }
+
+        .screenshot-mock:hover {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: #c084fc;
+            color: #ffffff;
         }
 
         .screenshot-mock svg {
             width: 20px;
             height: 20px;
             fill: var(--text-dim);
+            transition: fill 0.2s ease;
+        }
+
+        .screenshot-mock:hover svg {
+            fill: var(--cyan-accent);
         }
 
         .promo-art-container {
@@ -414,6 +470,12 @@
             overflow: hidden;
             border: 1px solid var(--border-purple);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .promo-art-container:hover {
+            transform: scale(1.02);
+            border-color: #00d9ff;
         }
 
         .promo-art-container img {
@@ -444,6 +506,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.5);
+            background: #17132e;
         }
 
         .roadmap-card h4 {
@@ -519,6 +588,11 @@
             background: var(--bg-card-inner);
             border-radius: 10px;
             border: 1px solid var(--border-subtle);
+            transition: border-color 0.2s ease;
+        }
+
+        .direct-email:hover {
+            border-color: #a78bfa;
         }
 
         .direct-email span {
@@ -535,6 +609,11 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .direct-email a:hover {
+            color: var(--cyan-accent);
         }
 
         .support-form {
@@ -571,6 +650,7 @@
             color: #ffffff;
             font-family: inherit;
             font-size: 0.92rem;
+            transition: border-color 0.2s ease;
         }
 
         .form-group input:focus, 
@@ -597,10 +677,10 @@
             gap: 18px;
         }
 
-        /* --- FOOTER --- */
+        /* --- FOOTER (TALLER PROPORTIONAL BANNER) --- */
         footer {
             background: #06050d;
-            padding: 50px 32px 28px;
+            padding: 55px 32px 30px;
             border-top: 1px solid var(--border-subtle);
         }
 
@@ -611,20 +691,29 @@
             justify-content: space-between;
             align-items: flex-start;
             flex-wrap: wrap;
-            gap: 32px;
+            gap: 36px;
         }
 
         .footer-brand {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .footer-brand-img {
-            height: 42px;
-            width: auto;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
             display: block;
-            border-radius: 6px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-purple);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .footer-brand-img:hover {
+            transform: scale(1.02);
+            border-color: var(--cyan-accent);
         }
 
         .footer-brand p {
@@ -642,11 +731,13 @@
             color: var(--text-body);
             text-decoration: none;
             font-size: 0.92rem;
-            transition: color 0.2s;
+            font-weight: 500;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
         }
 
         .footer-nav a:hover {
-            color: var(--text-heading);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
         }
 
         .footer-bottom {
@@ -671,9 +762,6 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
-            .nav-brand-img {
-                height: 38px;
-            }
         }
     </style>
 </head>
@@ -681,9 +769,7 @@
 
     <!-- STICKY NAVIGATION -->
     <nav>
-        <a href="#" class="nav-brand">
-            <img src="linkvibe-banner.png" alt="LinkVibe™ Studios" class="nav-brand-img">
-        </a>
+        <a href="#" class="nav-brand">LinkVibe<span>™</span> Studios</a>
         <div class="nav-links">
             <a href="#games">Games</a>
             <a href="#studio">Studio</a>
@@ -692,7 +778,7 @@
         </div>
     </nav>
 
-    <!-- NEON SHOWCASE CENTER BANNER -->
+    <!-- NEON ANIMATED SHOWCASE CENTER BANNER -->
     <div class="showcase-banner-section">
         <div class="neon-banner-wrapper">
             <div class="neon-banner-frame">
