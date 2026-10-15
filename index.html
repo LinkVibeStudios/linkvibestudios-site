@@ -1,37 +1,931 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>LinkVibe Studios | Mobile Games & Apps</title>
-  <meta name="description" content="LinkVibe Studios - Independent mobile game development studio creating engaging Android puzzle and trivia games. Play Word Scramble Trivia today.">
-  <meta name="keywords" content="LinkVibe Studios, Word Scramble Trivia, Android games, indie game developer, mobile puzzle games">
-  <meta name="author" content="LinkVibe Studios">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon & App Identity -->
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="https://linkvibestudios.com/circular-emblem.jpg">
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="https://linkvibestudios.com/circular-emblem.jpg">
+    <link rel="apple-touch-icon" href="https://linkvibestudios.com/circular-emblem.jpg">    
+    <meta name="theme-color" content="#090812">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #090812;
+            --bg-card: #120f24;
+            --bg-card-inner: #1a1633;
+            --purple-btn: #7c3aed;
+            --purple-btn-hover: #9333ea;
+            --purple-glow: rgba(124, 58, 237, 0.45);
+            --cyan-accent: #00d9ff;
+            --pink-accent: #ec4899;
+            --border-purple: rgba(139, 92, 246, 0.22);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --text-heading: #ffffff;
+            --text-body: #9490a8;
+            --text-dim: #78719c;
+            --pill-purple-bg: rgba(139, 92, 246, 0.12);
+            --pill-purple-text: #c084fc;
+            --pill-purple-border: rgba(139, 92, 246, 0.25);
+        }
 
-  <!-- Open Graph / Facebook -->
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- STICKY NAVIGATION --- */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 8, 18, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.8px;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+        }
+
+        .nav-brand:hover {
+            transform: scale(1.02);
+            text-shadow: 0 0 16px rgba(0, 217, 255, 0.6);
+        }
+
+        .nav-brand span {
+            color: var(--cyan-accent);
+            margin: 0 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
+        }
+
+        /* --- NEON ANIMATED SHOWCASE CENTER BANNER --- */
+        @keyframes neonGlowShift {
+            0% {
+                background-position: 0% 50%;
+                box-shadow: 0 0 30px rgba(0, 217, 255, 0.35), 0 0 60px rgba(124, 58, 237, 0.25);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 0 0 45px rgba(236, 72, 153, 0.45), 0 0 80px rgba(0, 217, 255, 0.35);
+            }
+            100% {
+                background-position: 0% 50%;
+                box-shadow: 0 0 30px rgba(0, 217, 255, 0.35), 0 0 60px rgba(124, 58, 237, 0.25);
+            }
+        }
+
+        .showcase-banner-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 32px auto 0;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .neon-banner-wrapper {
+            position: relative;
+            width: 100%;
+            padding: 3px;
+            border-radius: 20px;
+            background: linear-gradient(120deg, var(--cyan-accent), var(--purple-btn), var(--pink-accent), var(--cyan-accent));
+            background-size: 300% 300%;
+            animation: neonGlowShift 6s ease infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .neon-banner-wrapper:hover {
+            transform: translateY(-2px);
+        }
+
+        .neon-banner-frame {
+            width: 100%;
+            border-radius: 17px;
+            overflow: hidden;
+            background: var(--bg-base);
+            display: flex;
+        }
+
+        .neon-banner-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- SECTION COMMONS --- */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 65px 24px;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: var(--pill-purple-text);
+            background: var(--pill-purple-bg);
+            border: 1px solid var(--pill-purple-border);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(2rem, 3.8vw, 2.9rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--text-heading);
+            margin-bottom: 14px;
+        }
+
+        .section-desc {
+            color: var(--text-body);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        /* --- BUTTONS & INTERACTIVE HOVER STATES --- */
+        .btn-purple {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--purple-btn);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 13px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 18px var(--purple-glow);
+            transition: all 0.25s ease;
+        }
+
+        .btn-purple:hover {
+            background: var(--purple-btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 26px rgba(168, 85, 247, 0.65);
+            color: #ffffff;
+        }
+
+        .btn-dark-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 13px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-dark-outline:hover {
+            background: rgba(139, 92, 246, 0.22);
+            border-color: #a78bfa;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
+        }
+
+        .btn-play-dark {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card-inner);
+            color: var(--text-heading);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 1px solid var(--border-purple);
+            transition: all 0.25s ease;
+        }
+
+        .btn-play-dark:hover {
+            background: #272147;
+            border-color: #c084fc;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 22px rgba(192, 132, 252, 0.4);
+        }
+
+        .btn-play-dark svg {
+            width: 20px;
+            height: 20px;
+            fill: #ffffff;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-play-dark:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 48px;
+            padding-top: 10px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .hero-card-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-game-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            border-radius: 28px;
+            display: block;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 217, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-game-img:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.7), 0 0 45px rgba(0, 217, 255, 0.35);
+        }
+
+        /* --- FEATURED GAME SECTION --- */
+        .featured-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-purple);
+            border-radius: 24px;
+            padding: 44px;
+            transition: border-color 0.3s ease;
+        }
+
+        .featured-box:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .featured-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .featured-icon-img {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+            display: block;
+        }
+
+        .featured-title-wrap h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 40px;
+            margin-top: 28px;
+        }
+
+        .features-subgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 24px 0 28px;
+        }
+
+        .feature-card {
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 16px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .feature-icon-box {
+            width: 32px;
+            height: 32px;
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .feature-icon-box svg {
+            width: 18px;
+            height: 18px;
+            fill: #c084fc;
+        }
+
+        .feature-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-heading);
+        }
+
+        .feature-card p {
+            font-size: 0.82rem;
+            color: var(--text-body);
+            line-height: 1.45;
+        }
+
+        .screenshots-placeholder {
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .screenshots-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .screenshots-preview-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .screenshot-mock {
+            background: #000000;
+            border: 1px solid var(--border-purple);
+            border-radius: 10px;
+            overflow: hidden;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .screenshot-mock:hover {
+            border-color: var(--cyan-accent);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 24px rgba(0, 217, 255, 0.4);
+        }
+
+        .screenshot-mock img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .promo-art-container {
+            margin-top: 14px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-purple);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .promo-art-container:hover {
+            transform: scale(1.02);
+            border-color: #00d9ff;
+        }
+
+        .promo-art-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- LIGHTBOX FULLSCREEN MODAL --- */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 4, 12, 0.88);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content-frame {
+            position: relative;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: modalZoom 0.25s ease;
+        }
+
+        @keyframes modalZoom {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 18px;
+            border: 2px solid var(--cyan-accent);
+            box-shadow: 0 0 35px rgba(0, 217, 255, 0.4), 0 0 70px rgba(124, 58, 237, 0.35);
+            object-fit: contain;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            background: #181433;
+            border: 1px solid var(--cyan-accent);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+            transition: transform 0.2s ease, background 0.2s ease;
+            user-select: none;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.15);
+            background: var(--purple-btn);
+        }
+
+        /* --- STUDIO & ROADMAP --- */
+        .studio-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 52px;
+        }
+
+        .roadmap-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .roadmap-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-purple);
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.5);
+            background: #17132e;
+        }
+
+        .roadmap-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .roadmap-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-live {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-soon {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-future {
+            background: rgba(156, 163, 175, 0.12);
+            color: #9ca3af;
+            border: 1px solid rgba(156, 163, 175, 0.3);
+        }
+
+        /* --- PLAYER SUPPORT & COMPLIANCE --- */
+        .support-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-purple);
+            border-radius: 24px;
+            padding: 44px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+        }
+
+        .support-info ul {
+            list-style: none;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .support-info li {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .support-info li::before {
+            content: "•";
+            color: var(--purple-btn);
+            font-size: 1.4rem;
+            line-height: 0;
+        }
+
+        .direct-email {
+            margin-top: 20px;
+            padding: 14px 16px;
+            background: var(--bg-card-inner);
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            transition: border-color 0.2s ease;
+        }
+
+        .direct-email:hover {
+            border-color: #a78bfa;
+        }
+
+        .direct-email span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .direct-email a {
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .direct-email a:hover {
+            color: var(--cyan-accent);
+        }
+
+        .support-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-body);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-purple);
+            border-radius: 8px;
+            padding: 11px 14px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.92rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #a78bfa;
+        }
+
+        /* --- FINAL CTA BANNER --- */
+        .cta-section {
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 70px 24px;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        /* --- FOOTER (TALLER PROPORTIONAL BANNER) --- */
+        footer {
+            background: #06050d;
+            padding: 55px 32px 30px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-top {
+            max-width: 1200px;
+            margin: 0 auto 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 36px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-brand-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-purple);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .footer-brand-img:hover {
+            transform: scale(1.02);
+            border-color: var(--cyan-accent);
+        }
+
+        .footer-brand p {
+            color: var(--text-body);
+            font-size: 0.88rem;
+            max-width: 320px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .footer-nav a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.7);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid, .featured-grid, .studio-grid, .support-box {
+                grid-template-columns: 1fr;
+            }
+            .features-subgrid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+/* --- MOBILE & VIEWPORT FIXES --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Compact Brand Title */
+.brand-logo, header a.brand, header h1, header .logo {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  letter-spacing: normal !important;
+}
+
+/* Clean stacked pill navigation */
+@media (max-width: 768px) {
+  header, nav, .navbar, .nav-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    width: 100% !important;
+  }
+
+  nav ul, .nav-links, .nav-menu {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  nav a, .nav-links a {
+    display: inline-block !important;
+    font-size: 13px !important;
+    padding: 6px 14px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Prevent modal drift */
+.lightbox-modal, .modal, #screenshot-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+.lightbox-modal img, .modal img, #screenshot-modal img {
+  max-width: 88vw !important;
+  max-height: 80vh !important;
+  object-fit: contain !important;
+}
+    </style>
+    <!-- ================= SEO & METADATA ================= -->
+  <title>LinkVibe Studios | Mobile Games & Word Scramble Trivia</title>
+  <meta name="title" content="LinkVibe Studios | Mobile Games & Word Scramble Trivia">
+  <meta name="description" content="LinkVibe Studios is an independent mobile game development studio crafting engaging puzzle, trivia, and word games for Android.">
+  <meta name="keywords" content="LinkVibe Studios, Word Scramble Trivia, Android word game, indie game developer, mobile puzzle trivia">
+  <meta name="author" content="LinkVibe Studios">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://linkvibestudios.com/">
+
+  <!-- Open Graph / Social Media Preview Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://linkvibestudios.com/">
-  <meta property="og:title" content="LinkVibe Studios | Independent Mobile Game Studio">
-  <meta property="og:description" content="Engaging, rewarding mobile gaming experiences built for players everywhere. Play Word Scramble Trivia on Google Play.">
-  <meta property="og:image" content="https://linkvibestudios.com/circular-emblem.jpg">
+  <meta property="og:site_name" content="LinkVibe Studios">
+  <meta property="og:title" content="LinkVibe Studios | Mobile Games & Apps">
+  <meta property="og:description" content="Independent mobile game development studio crafting engaging puzzle, trivia, and word games for Android.">
+  <meta property="og:image" content="https://linkvibestudios.com/assets/og-preview.png">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://linkvibestudios.com/">
-  <meta property="twitter:title" content="LinkVibe Studios | Independent Mobile Game Studio">
-  <meta property="twitter:description" content="Engaging, rewarding mobile gaming experiences built for players everywhere. Play Word Scramble Trivia on Google Play.">
-  <meta property="twitter:image" content="https://linkvibestudios.com/circular-emblem.jpg">
-
-  <!-- Favicon & App Identity -->
-  <link rel="icon" type="image/jpeg" sizes="192x192" href="https://linkvibestudios.com/circular-emblem.jpg">
-  <link rel="icon" type="image/jpeg" sizes="32x32" href="https://linkvibestudios.com/circular-emblem.jpg">
-  <link rel="apple-touch-icon" href="https://linkvibestudios.com/circular-emblem.jpg">
-  <meta name="theme-color" content="#090812">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://linkvibestudios.com/">
+  <meta name="twitter:title" content="LinkVibe Studios | Mobile Games & Apps">
+  <meta name="twitter:description" content="Independent mobile game development studio crafting engaging puzzle, trivia, and word games for Android.">
+  <meta name="twitter:image" content="https://linkvibestudios.com/assets/og-preview.png">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -42,971 +936,302 @@
         "@type": "Organization",
         "@id": "https://linkvibestudios.com/#organization",
         "name": "LinkVibe Studios",
-        "url": "https://linkvibestudios.com/",
-        "logo": "https://linkvibestudios.com/circular-emblem.jpg",
-        "email": "support@linkvibestudios.com",
-        "sameAs": [
-          "https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia"
-        ]
+        "url": "https://linkvibestudios.com",
+        "email": "support@linkvibestudios.com"
       },
       {
         "@type": "SoftwareApplication",
-        "@id": "https://linkvibestudios.com/#word-scramble-trivia",
+        "@id": "https://linkvibestudios.com/#game",
         "name": "Word Scramble Trivia",
         "operatingSystem": "Android",
         "applicationCategory": "GameApplication",
-        "publisher": {
-          "@id": "https://linkvibestudios.com/#organization"
-        },
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
-        },
-        "url": "https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia"
+        }
       }
     ]
   }
   </script>
-
-  <style>
-    :root {
-      --bg-base: #090812;
-      --bg-card: #120f24;
-      --bg-card-inner: #1a1633;
-      --purple-btn: #7c3aed;
-      --purple-btn-hover: #9333ea;
-      --cyan-glow: #00f2fe;
-      --magenta-glow: #ec4899;
-      --gold-accent: #fbbf24;
-      --text-light: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --font-heading: 'Rajdhani', sans-serif;
-      --font-body: 'Inter', sans-serif;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
-      background-color: var(--bg-base);
-      color: var(--text-light);
-      font-family: var(--font-body);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* Masthead Header with Top Banner and Clean Navigation */
-    .site-header {
-      position: relative;
-      width: 100%;
-      background: rgba(9, 8, 18, 0.96);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 16px 0 14px;
-    }
-
-    .nav-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .header-banner-link {
-      display: block;
-      width: 100%;
-      max-width: 440px;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1.5px solid rgba(168, 85, 247, 0.45);
-      box-shadow: 0 0 22px rgba(124, 58, 237, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .header-banner-link:hover {
-      transform: scale(1.01);
-      box-shadow: 0 0 28px rgba(0, 242, 254, 0.45);
-    }
-
-    .header-banner-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 9999px;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .nav-links a:hover {
-      color: #ffffff;
-      background: rgba(124, 58, 237, 0.25);
-      border-color: rgba(124, 58, 237, 0.5);
-    }
-
-    /* Hero Section (No redundant middle banner) */
-    .hero-section {
-      padding: 40px 0 50px;
-      text-align: center;
-    }
-
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: rgba(124, 58, 237, 0.15);
-      border: 1px solid rgba(124, 58, 237, 0.4);
-      border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #c084fc;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-family: var(--font-heading);
-      font-size: 52px;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero-subtitle {
-      max-width: 660px;
-      margin: 0 auto 30px;
-      font-size: 18px;
-      color: var(--text-muted);
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-      border: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--purple-btn), #4f46e5);
-      color: #ffffff;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, var(--purple-btn-hover), #4338ca);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: var(--bg-card);
-      color: var(--text-light);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-card-inner);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Featured Game Card */
-    .game-section {
-      padding: 50px 0;
-    }
-
-    .game-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(124, 58, 237, 0.25);
-      border-radius: 28px;
-      padding: 44px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .game-header {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      margin-bottom: 28px;
-    }
-
-    .game-icon-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 24px;
-      border: 2px solid rgba(251, 191, 36, 0.4);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      flex-shrink: 0;
-    }
-
-    .game-meta h3 {
-      font-family: var(--font-heading);
-      font-size: 38px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .game-tag {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 700;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 4px 12px;
-      border-radius: 9999px;
-    }
-
-    .game-description {
-      font-size: 17px;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      max-width: 860px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-bottom: 36px;
-    }
-
-    .feature-box {
-      background: var(--bg-card-inner);
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 22px;
-    }
-
-    .feature-box h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #e2e8f0;
-    }
-
-    .feature-box p {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    /* Screenshots Gallery Strip */
-    .screenshots-title {
-      font-family: var(--font-heading);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      text-transform: uppercase;
-    }
-
-    .screenshots-gallery {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding: 4px 4px 16px 4px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .screenshots-gallery::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .screenshots-gallery::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-    }
-
-    .screenshots-gallery::-webkit-scrollbar-thumb {
-      background: rgba(124, 58, 237, 0.5);
-      border-radius: 4px;
-    }
-
-    .screenshot-thumb {
-      flex: 0 0 160px;
-      height: 285px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      cursor: pointer;
-      transition: all 0.25s ease;
-      scroll-snap-align: start;
-      background: #000;
-    }
-
-    .screenshot-thumb:hover {
-      border-color: var(--cyan-glow);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 242, 254, 0.25);
-    }
-
-    .screenshot-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Lightbox Modal */
-    .lightbox-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(5, 4, 15, 0.94);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      touch-action: none;
-      overflow: hidden;
-    }
-
-    .lightbox-container {
-      position: relative;
-      max-width: 90vw;
-      max-height: 85vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lightbox-img {
-      max-width: 88vw;
-      max-height: 80vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 18px;
-      border: 2px solid rgba(0, 242, 254, 0.6);
-      box-shadow: 0 0 40px rgba(0, 242, 254, 0.35);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -18px;
-      right: -18px;
-      width: 44px;
-      height: 44px;
-      background: #0f172a;
-      border: 2px solid var(--cyan-glow);
-      border-radius: 50%;
-      color: #ffffff;
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
-      z-index: 10001;
-      transition: transform 0.15s ease;
-    }
-
-    .lightbox-close:hover {
-      transform: scale(1.1);
-    }
-
-    /* Studio & Roadmap Section */
-    .studio-section {
-      padding: 50px 0;
-    }
-
-    .studio-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 28px;
-      padding: 44px;
-      margin-bottom: 32px;
-    }
-
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    .roadmap-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 28px;
-    }
-
-    .roadmap-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-card-inner);
-      padding: 20px 24px;
-      border-radius: 16px;
-      border: 1px solid var(--border-subtle);
-      gap: 16px;
-    }
-
-    .roadmap-info h5 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .roadmap-info p {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .status-badge {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-
-    .badge-live {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.35);
-    }
-
-    .badge-soon {
-      background: rgba(251, 191, 36, 0.15);
-      color: #fde047;
-      border: 1px solid rgba(251, 191, 36, 0.35);
-    }
-
-    .badge-dev {
-      background: rgba(148, 163, 184, 0.15);
-      color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-    }
-
-    /* Support & Contact Section */
-    .support-section {
-      padding: 50px 0;
-    }
-
-    .support-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-
-    .support-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 28px;
-      padding: 40px;
-    }
-
-    .direct-email {
-      font-size: 20px;
-      font-weight: 700;
-      color: #38bdf8;
-      margin: 12px 0;
-      display: inline-block;
-    }
-
-    .support-list {
-      list-style: none;
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .support-list li {
-      font-size: 15px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #cbd5e1;
-    }
-
-    .form-input, .form-select, .form-textarea {
-      width: 100%;
-      background: var(--bg-card-inner);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      padding: 14px 16px;
-      color: #ffffff;
-      font-family: inherit;
-      font-size: 15px;
-      transition: border-color 0.2s ease;
-    }
-
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--purple-btn);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    /* CTA Card & Footer */
-    .cta-card {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 242, 254, 0.1));
-      border: 1px solid rgba(124, 58, 237, 0.35);
-      border-radius: 28px;
-      padding: 50px 30px;
-      text-align: center;
-      margin: 30px 0 70px;
-    }
-
-    .site-footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 44px 0 30px;
-      text-align: center;
-    }
-
-    .footer-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 22px;
-      list-style: none;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .footer-links a:hover {
-      color: #ffffff;
-    }
-
-    .footer-copy {
-      font-size: 13px;
-      color: #64748b;
-    }
-
-    /* Mobile Responsive Breakpoint (< 768px) */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 16px;
-      }
-
-      .site-header {
-        padding: 14px 0 12px;
-      }
-
-      .header-banner-link {
-        max-width: 100%;
-        border-radius: 12px;
-      }
-
-      .nav-links {
-        gap: 8px;
-      }
-
-      .nav-links a {
-        padding: 6px 12px;
-        font-size: 12.5px;
-      }
-
-      .hero-section {
-        padding: 32px 0 38px;
-      }
-
-      .hero-title {
-        font-size: 36px;
-      }
-
-      .hero-subtitle {
-        font-size: 16px;
-        margin-bottom: 24px;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .game-card, .studio-card, .support-card {
-        padding: 24px 18px;
-        border-radius: 20px;
-      }
-
-      .game-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-      }
-
-      .game-icon-img {
-        width: 96px;
-        height: 96px;
-      }
-
-      .game-meta h3 {
-        font-size: 30px;
-      }
-
-      .support-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .roadmap-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .screenshot-thumb {
-        flex: 0 0 140px;
-        height: 250px;
-      }
-
-      .lightbox-modal {
-        padding: 12px;
-      }
-
-      .lightbox-img {
-        max-width: 90vw;
-        max-height: 80vh;
-      }
-
-      .lightbox-close {
-        top: -12px;
-        right: -12px;
-        width: 40px;
-        height: 40px;
-      }
-    }
-  </style>
+  <!-- ================= END SEO & METADATA ================= -->
 </head>
 <body>
 
-  <!-- Top Masthead Header -->
-  <header class="site-header">
-    <div class="container">
-      <div class="nav-wrapper">
-        <a href="https://linkvibestudios.com/" class="header-banner-link">
-          <img src="banner_1024x500.png" alt="LinkVibe Studios Games and Apps" class="header-banner-img">
-        </a>
-        <ul class="nav-links">
-          <li><a href="#games">Games</a></li>
-          <li><a href="#studio">Studio</a></li>
-          <li><a href="#support">Support</a></li>
-          <li><a href="https://docs.google.com/document/d/1I2NLqAJ4UHA06J1ofC08Cl71TWX3vhSlGIhhINn1uOQ/edit?usp=sharing" target="_blank" rel="noopener">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container">
-      <div class="badge-pill">🎮 INDEPENDENT GAME STUDIO</div>
-      <h1 class="hero-title">LinkVibe Studios</h1>
-      <p class="hero-subtitle">Engaging, rewarding mobile gaming experiences built for players everywhere. Designed with responsive controls, thoughtful pacing, and instant gameplay.</p>
-      <div class="btn-group">
-        <a href="#games" class="btn btn-primary">Explore Our Games ›</a>
-        <a href="#studio" class="btn btn-secondary">Our Studio</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Game Section -->
-  <section id="games" class="game-section">
-    <div class="container">
-      <div class="game-card">
-        <div class="game-header">
-          <img src="icon_512.png" alt="Word Scramble Trivia Icon" class="game-icon-img" onerror="this.onerror=null; this.src='square-icon.png';">
-          <div class="game-meta">
-            <span class="badge-pill" style="margin-bottom: 8px;">FEATURED GAME</span>
-            <h3>Word Scramble Trivia</h3>
-            <span class="game-tag">Available on Android</span>
-          </div>
+    <!-- STICKY NAVIGATION -->
+    <nav>
+        <a href="#" class="nav-brand">LinkVibe<span>™</span> Studios</a>
+        <div class="nav-links">
+            <a href="#games">Games</a>
+            <a href="#studio">Studio</a>
+            <a href="#support">Support</a>
+            <a href="privacy.html">Privacy Policy</a>
         </div>
+    </nav>
 
-        <p class="game-description">A fast-paced, brain-teasing anagram and vocabulary challenge designed for Android. Features thousands of levels, dynamic category trivia, earnable rewards, and competitive leaderboards.</p>
-
-        <div class="features-grid">
-          <div class="feature-box">
-            <h4>🧩 Solo Puzzle Play</h4>
-            <p>Thousands of levels across multiple themed categories.</p>
-          </div>
-          <div class="feature-box">
-            <h4>🏆 Achievements & Boards</h4>
-            <p>Seamless Google Play Games services integration.</p>
-          </div>
-          <div class="feature-box">
-            <h4>💡 Rewarded Hints</h4>
-            <p>Earn helpful in-game hints as you solve challenging puzzles.</p>
-          </div>
+    <!-- NEON ANIMATED SHOWCASE CENTER BANNER -->
+    <div class="showcase-banner-section">
+        <div class="neon-banner-wrapper">
+            <div class="neon-banner-frame">
+                <img src="linkvibe-banner.png" alt="LinkVibe™ Studios - Games & Apps">
+            </div>
         </div>
+    </div>
 
-        <a href="https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia" target="_blank" rel="noopener" class="btn btn-primary" style="margin-bottom: 40px;">
-          ▶ Get it on Google Play
-        </a>
-
-        <!-- Interactive Screenshots Gallery -->
-        <h4 class="screenshots-title">In-Game Screenshots</h4>
-        <div class="screenshots-gallery">
-          <div class="screenshot-thumb" onclick="openLightbox(this)">
-            <img src="screenshot1.png" alt="Word Scramble Trivia Puzzle View" onerror="this.onerror=null; this.src='icon_512.png';">
-          </div>
-          <div class="screenshot-thumb" onclick="openLightbox(this)">
-            <img src="screenshot2.png" alt="Word Scramble Trivia Daily Rewards" onerror="this.onerror=null; this.src='icon_512.png';">
-          </div>
-          <div class="screenshot-thumb" onclick="openLightbox(this)">
-            <img src="screenshot3.png" alt="Word Scramble Trivia Categories" onerror="this.onerror=null; this.src='icon_512.png';">
-          </div>
-          <div class="screenshot-thumb" onclick="openLightbox(this)">
-            <img src="screenshot4.png" alt="Word Scramble Trivia Victory Stats" onerror="this.onerror=null; this.src='icon_512.png';">
-          </div>
+    <!-- HERO SECTION -->
+    <section>
+        <div class="hero-grid">
+            <div>
+                <div class="badge-pill">🎮 Independent Game Studio</div>
+                <h1 class="section-heading">LinkVibe Studios</h1>
+                <p class="section-desc">Engaging, rewarding mobile gaming experiences built for players everywhere. Designed with responsive controls, thoughtful pacing, and instant gameplay.</p>
+                <div class="hero-actions">
+                    <a href="#games" class="btn-purple">Explore Our Games &rsaquo;</a>
+                    <a href="#studio" class="btn-dark-outline">Our Studio</a>
+                </div>
+            </div>
+            <div>
+                <div class="hero-card-preview">
+                    <img src="square-icon.png" alt="Word Scramble Trivia" class="hero-game-img">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Studio & Roadmap Section -->
-  <section id="studio" class="studio-section">
-    <div class="container">
-      <div class="studio-card">
-        <div class="badge-pill">THE STUDIO</div>
-        <h2 class="section-title">Built by Indie Developers, For Players</h2>
-        <p style="color: var(--text-muted); font-size: 17px; margin-bottom: 24px;">LinkVibe Studios is an independent mobile game development studio dedicated to crafting polished, rewarding experiences for Android players worldwide. We believe great games come from passion and precision — every level, every mechanic, and every update is built with our players in mind.</p>
-        <p style="color: var(--text-muted); font-size: 17px;">We're actively expanding our catalog with future multi-platform titles and are committed to responsive updates driven by community feedback.</p>
+    <!-- FEATURED GAME SECTION -->
+    <section id="games">
+        <div class="featured-box">
+            <div class="badge-pill">Featured Game</div>
+            <div class="featured-header">
+                <img src="square-icon.png" alt="Word Scramble Trivia Icon" class="featured-icon-img">
+                <div class="featured-title-wrap">
+                    <h3>Word Scramble Trivia</h3>
+                    <span style="font-size: 0.85rem; color: #a78bfa; font-weight: 600;">Available on Android</span>
+                </div>
+            </div>
 
-        <div class="roadmap-list">
-          <h4 class="screenshots-title" style="margin-top: 16px;">Roadmap</h4>
-          <div class="roadmap-item">
-            <div class="roadmap-info">
-              <h5>Word Scramble Trivia</h5>
-              <p>Android Core Release</p>
+            <p class="section-desc" style="max-width: 100%;">
+                A fast-paced, brain-teasing anagram and vocabulary challenge designed for Android. Features thousands of levels, dynamic category trivia, earnable rewards, and competitive leaderboards.
+            </p>
+
+            <div class="featured-grid">
+                <div>
+                    <div class="features-subgrid">
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+                            </div>
+                            <h4>Solo Puzzle Play</h4>
+                            <p>Thousands of levels across multiple themed categories.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+                            </div>
+                            <h4>Achievements & Boards</h4>
+                            <p>Seamless Google Play Games services integration.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+                            </div>
+                            <h4>Rewarded Hints</h4>
+                            <p>Earn helpful in-game hints as you solve challenging puzzles.</p>
+                        </div>
+                    </div>
+
+                    <a class="btn-play-dark" href="https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.793 12 3.61 22.186c-.36-.36-.61-.88-.61-1.486V3.3c0-.606.25-1.126.61-1.486zM15.207 13.414l2.122 2.121-12.72 7.345 10.598-9.466zm0-2.828L4.609 1.12 17.33 8.465l-2.123 2.121zm1.414 1.414l3.18-1.836c.866-.5 1.414.048 1.414.542v.588c0 .494-.548 1.042-1.414.542l-3.18-1.836z"/></svg>
+                        Get it on Google Play
+                        <span style="font-size: 0.8rem; margin-left: 2px;">↗</span>
+                    </a>
+                </div>
+
+                <div class="screenshots-placeholder">
+                    <div class="screenshots-label">In-Game Screenshots</div>
+                    <div class="screenshots-preview-row">
+                        <div class="screenshot-mock" onclick="openLightbox('screen-1.jpg')">
+                            <img src="screen-1.jpg" alt="Word Scramble Trivia - Solving Puzzle">
+                        </div>
+                        <div class="screenshot-mock" onclick="openLightbox('screen-2.jpg')">
+                            <img src="screen-2.jpg" alt="Word Scramble Trivia - Category Selection">
+                        </div>
+                        <div class="screenshot-mock" onclick="openLightbox('screen-3.jpg')">
+                            <img src="screen-3.jpg" alt="Word Scramble Trivia - Puzzle Solved & Rewards">
+                        </div>
+                    </div>
+                    <div class="promo-art-container">
+                        <img src="landscape-banner.png" alt="Word Scramble Trivia Promo Banner">
+                    </div>
+                </div>
             </div>
-            <span class="status-badge badge-live">LIVE ON GOOGLE PLAY</span>
-          </div>
-          <div class="roadmap-item">
-            <div class="roadmap-info">
-              <h5>Expanded Level Packs</h5>
-              <p>New themed trivia categories</p>
-            </div>
-            <span class="status-badge badge-soon">COMING SOON</span>
-          </div>
-          <div class="roadmap-item">
-            <div class="roadmap-info">
-              <h5>New Title in Development</h5>
-              <p>Upcoming mobile experience</p>
-            </div>
-            <span class="status-badge badge-dev">2027</span>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Support Section -->
-  <section id="support" class="support-section">
-    <div class="container">
-      <div class="support-grid">
-        <div class="support-card">
-          <div class="badge-pill">PLAYER SUPPORT</div>
-          <h3 class="section-title" style="font-size: 32px;">We're Here to Help</h3>
-          <p style="color: var(--text-muted); margin-bottom: 12px;">DIRECT EMAIL</p>
-          <a href="mailto:support@linkvibestudios.com" class="direct-email">support@linkvibestudios.com</a>
-          <p style="color: var(--text-muted); font-size: 14px;">Response time is typically within 1–2 business days.</p>
-          <ul class="support-list">
-            <li>• Bug reports & technical issues</li>
-            <li>• Account & data deletion requests</li>
-            <li>• General feedback & suggestions</li>
-          </ul>
+    <!-- THE STUDIO & ROADMAP SECTION -->
+    <section id="studio">
+        <div class="studio-grid">
+            <div>
+                <div class="badge-pill">The Studio</div>
+                <h2 class="section-heading">Built by Indie Developers, For Players</h2>
+                <p class="section-desc" style="margin-bottom: 16px;">
+                    LinkVibe Studios is an independent mobile game development studio dedicated to crafting polished, rewarding experiences for Android players worldwide. We believe great games come from passion and precision — every level, every mechanic, and every update is built with our players in mind.
+                </p>
+                <p class="section-desc">
+                    We're actively expanding our catalog with future multi-platform titles and are committed to responsive updates driven by community feedback.
+                </p>
+            </div>
+
+            <div>
+                <div class="badge-pill">Roadmap</div>
+                <div class="roadmap-list">
+                    <div class="roadmap-card">
+                        <div>
+                            <h4>Word Scramble Trivia</h4>
+                            <p style="font-size: 0.82rem; color: var(--text-dim); margin-top: 2px;">Android Core Release</p>
+                        </div>
+                        <span class="roadmap-status status-live">Live on Google Play</span>
+                    </div>
+
+                    <div class="roadmap-card">
+                        <div>
+                            <h4>Expanded Level Packs</h4>
+                            <p style="font-size: 0.82rem; color: var(--text-dim); margin-top: 2px;">New themed trivia categories</p>
+                        </div>
+                        <span class="roadmap-status status-soon">Coming Soon</span>
+                    </div>
+
+                    <div class="roadmap-card">
+                        <div>
+                            <h4>New Title in Development</h4>
+                            <p style="font-size: 0.82rem; color: var(--text-dim); margin-top: 2px;">Upcoming mobile experience</p>
+                        </div>
+                        <span class="roadmap-status status-future">2027</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="support-card">
-          <form onsubmit="handleContactSubmit(event)">
-            <div class="form-group">
-              <label for="contact-name">Name</label>
-              <input type="text" id="contact-name" class="form-input" placeholder="Your name" required>
+    <!-- PLAYER SUPPORT & COMPLIANCE -->
+    <section id="support">
+        <div class="support-box">
+            <div class="support-info">
+                <div class="badge-pill">Player Support</div>
+                <h2 class="section-heading">Player Support</h2>
+                <p class="section-desc">We're here to help. Reach out for bug reports, account inquiries, or general feedback.</p>
+                
+                <div class="direct-email">
+                    <span>Direct Email</span>
+                    <a href="mailto:support@linkvibestudios.com">support@linkvibestudios.com ↗</a>
+                </div>
+
+                <p style="font-size: 0.82rem; color: var(--text-dim); margin-top: 14px;">Response time is typically within 1–2 business days.</p>
+
+                <ul>
+                    <li>Bug reports & technical issues</li>
+                    <li>Account & data deletion requests</li>
+                    <li>General feedback & suggestions</li>
+                </ul>
             </div>
-            <div class="form-group">
-              <label for="contact-email">Email</label>
-              <input type="email" id="contact-email" class="form-input" placeholder="your@email.com" required>
+
+            <div>
+                <form class="support-form" action="mailto:support@linkvibestudios.com" method="post" enctype="text/plain">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Account or Data Deletion">Account / Data Deletion Request</option>
+                            <option value="General Feedback">General Feedback</option>
+                            <option value="Other Inquiry">Other Inquiry</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Describe your issue or feedback..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-purple" style="align-self: flex-start; margin-top: 4px;">
+                        <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: #ffffff;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        Send Message
+                    </button>
+                </form>
             </div>
-            <div class="form-group">
-              <label for="contact-subject">Subject</label>
-              <select id="contact-subject" class="form-select">
-                <option value="Bug Report">Bug Report</option>
-                <option value="Account / Data Request">Account & Data Request</option>
-                <option value="General Feedback">General Feedback</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="contact-message">Message</label>
-              <textarea id="contact-message" class="form-textarea" placeholder="Describe your issue or feedback..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-          </form>
         </div>
-      </div>
+    </section>
+
+    <!-- FINAL CALL TO ACTION -->
+    <div class="cta-section">
+        <div class="cta-content">
+            <h2 class="section-heading" style="margin-bottom: 0;">Ready to play?</h2>
+            <p class="section-desc">Download Word Scramble Trivia on Google Play and start your puzzle journey today.</p>
+            <a class="btn-purple" href="https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #ffffff;"><path d="M3.609 1.814L13.793 12 3.61 22.186c-.36-.36-.61-.88-.61-1.486V3.3c0-.606.25-1.126.61-1.486zM15.207 13.414l2.122 2.121-12.72 7.345 10.598-9.466zm0-2.828L4.609 1.12 17.33 8.465l-2.123 2.121zm1.414 1.414l3.18-1.836c.866-.5 1.414.048 1.414.542v.588c0 .494-.548 1.042-1.414.542l-3.18-1.836z"/></svg>
+                Get it on Google Play
+            </a>
+        </div>
     </div>
-  </section>
 
-  <!-- Pre-Footer CTA -->
-  <div class="container">
-    <div class="cta-card">
-      <h2 style="font-family: var(--font-heading); font-size: 38px; margin-bottom: 12px;">Ready to play?</h2>
-      <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 17px;">Download Word Scramble Trivia on Google Play and start your puzzle journey today.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.linkvibestudios.wordscrambletrivia" target="_blank" rel="noopener" class="btn btn-primary">
-        ▶ Get it on Google Play
-      </a>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <img src="linkvibe-banner.png" alt="LinkVibe™ Studios" class="footer-brand-img">
+                <p>Independent mobile game development studio crafting engaging Android experiences.</p>
+                <p><a href="mailto:support@linkvibestudios.com" style="color: #a78bfa; text-decoration: none; font-size: 0.85rem;">support@linkvibestudios.com</a></p>
+            </div>
+            <div class="footer-nav">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="#games">Games</a>
+                <a href="#studio">Studio</a>
+                <a href="#support">Support</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 LinkVibe Studios. All rights reserved.</p>
+            <p>Made for players everywhere</p>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX FULLSCREEN MODAL -->
+    <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox(event)">
+        <div class="lightbox-content-frame">
+            <div class="modal-close" onclick="closeLightbox(event)">&times;</div>
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Word Scramble Trivia Fullscreen">
+        </div>
     </div>
-  </div>
 
-  <!-- Site Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-logo">
-        <img src="circular-emblem.jpg" alt="LinkVibe Studios Emblem" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
-        <span style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; display: inline-flex; align-items: baseline; gap: 3px;">
-          <span style="background: linear-gradient(135deg, #a855f7, var(--cyan-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LinkVibe</span><span style="font-size: 12px; color: var(--text-muted); vertical-align: super;">™</span> Studios
-        </span>
-      </div>
-      <p style="margin-bottom: 16px;"><a href="mailto:support@linkvibestudios.com" style="color: #38bdf8;">support@linkvibestudios.com</a></p>
-      <ul class="footer-links">
-        <li><a href="https://docs.google.com/document/d/1I2NLqAJ4UHA06J1ofC08Cl71TWX3vhSlGIhhINn1uOQ/edit?usp=sharing" target="_blank" rel="noopener">Privacy Policy</a></li>
-        <li><a href="#games">Games</a></li>
-        <li><a href="#studio">Studio</a></li>
-        <li><a href="#support">Support</a></li>
-      </ul>
-      <p class="footer-copy">© 2026 LinkVibe Studios. All rights reserved. • Made for players everywhere</p>
-    </div>
-  </footer>
+    <!-- LIGHTBOX SCRIPT -->
+    <script>
+        function openLightbox(src) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-  <!-- Lightbox Modal Container -->
-  <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox(event)">
-    <div class="lightbox-container" onclick="event.stopPropagation()">
-      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Preview">✕</button>
-      <img id="lightbox-img" class="lightbox-img" src="" alt="Screenshot Full View">
-    </div>
-  </div>
+        function closeLightbox(e) {
+            if (!e || e.target.id === 'lightboxModal' || e.target.classList.contains('modal-close')) {
+                const modal = document.getElementById('lightboxModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
 
-  <script>
-    function openLightbox(el) {
-      const img = el.querySelector('img');
-      if (!img) return;
-      const modal = document.getElementById('lightbox-modal');
-      const targetImg = document.getElementById('lightbox-img');
-      targetImg.src = img.src;
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
 
-    function closeLightbox() {
-      const modal = document.getElementById('lightbox-modal');
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('contact-name').value;
-      const email = document.getElementById('contact-email').value;
-      const subject = document.getElementById('contact-subject').value;
-      const message = document.getElementById('contact-message').value;
-
-      const mailtoUrl = `mailto:support@linkvibestudios.com?subject=${encodeURIComponent(subject + ' - ' + name)}&body=${encodeURIComponent('From: ' + name + ' (' + email + ')\n\n' + message)}`;
-      window.location.href = mailtoUrl;
-    }
-  </script>
 </body>
 </html>
