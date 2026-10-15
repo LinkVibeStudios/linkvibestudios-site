@@ -831,6 +831,77 @@
                 grid-template-columns: 1fr;
             }
         }
+/* --- MOBILE & VIEWPORT FIXES --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Compact Brand Title */
+.brand-logo, header a.brand, header h1, header .logo {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  letter-spacing: normal !important;
+}
+
+/* Clean stacked pill navigation */
+@media (max-width: 768px) {
+  header, nav, .navbar, .nav-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    width: 100% !important;
+  }
+
+  nav ul, .nav-links, .nav-menu {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  nav a, .nav-links a {
+    display: inline-block !important;
+    font-size: 13px !important;
+    padding: 6px 14px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 9999px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Prevent modal drift */
+.lightbox-modal, .modal, #screenshot-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+.lightbox-modal img, .modal img, #screenshot-modal img {
+  max-width: 88vw !important;
+  max-height: 80vh !important;
+  object-fit: contain !important;
+}
     </style>
     <!-- ================= SEO & METADATA ================= -->
   <title>LinkVibe Studios | Mobile Games & Word Scramble Trivia</title>
