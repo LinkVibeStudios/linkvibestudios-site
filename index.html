@@ -432,13 +432,14 @@
             gap: 10px;
         }
 
-.screenshot-mock {
+        .screenshot-mock {
             background: #000000;
             border: 1px solid var(--border-purple);
             border-radius: 10px;
             overflow: hidden;
             display: block;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
@@ -472,6 +473,80 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* --- LIGHTBOX FULLSCREEN MODAL --- */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 4, 12, 0.88);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content-frame {
+            position: relative;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: modalZoom 0.25s ease;
+        }
+
+        @keyframes modalZoom {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 18px;
+            border: 2px solid var(--cyan-accent);
+            box-shadow: 0 0 35px rgba(0, 217, 255, 0.4), 0 0 70px rgba(124, 58, 237, 0.35);
+            object-fit: contain;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            background: #181433;
+            border: 1px solid var(--cyan-accent);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+            transition: transform 0.2s ease, background 0.2s ease;
+            user-select: none;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.15);
+            background: var(--purple-btn);
         }
 
         /* --- STUDIO & ROADMAP --- */
@@ -849,13 +924,13 @@
                 <div class="screenshots-placeholder">
                     <div class="screenshots-label">In-Game Screenshots</div>
                     <div class="screenshots-preview-row">
-                        <div class="screenshot-mock">
+                        <div class="screenshot-mock" onclick="openLightbox('screen-1.jpg')">
                             <img src="screen-1.jpg" alt="Word Scramble Trivia - Solving Puzzle">
                         </div>
-                        <div class="screenshot-mock">
+                        <div class="screenshot-mock" onclick="openLightbox('screen-2.jpg')">
                             <img src="screen-2.jpg" alt="Word Scramble Trivia - Category Selection">
                         </div>
-                        <div class="screenshot-mock">
+                        <div class="screenshot-mock" onclick="openLightbox('screen-3.jpg')">
                             <img src="screen-3.jpg" alt="Word Scramble Trivia - Puzzle Solved & Rewards">
                         </div>
                     </div>
@@ -1000,6 +1075,37 @@
             <p>Made for players everywhere</p>
         </div>
     </footer>
+
+    <!-- LIGHTBOX FULLSCREEN MODAL -->
+    <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox(event)">
+        <div class="lightbox-content-frame">
+            <div class="modal-close" onclick="closeLightbox(event)">&times;</div>
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Word Scramble Trivia Fullscreen">
+        </div>
+    </div>
+
+    <!-- LIGHTBOX SCRIPT -->
+    <script>
+        function openLightbox(src) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (!e || e.target.id === 'lightboxModal' || e.target.classList.contains('modal-close')) {
+                const modal = document.getElementById('lightboxModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
 
 </body>
 </html>
